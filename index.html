@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="index.css">
+    <title>I hetaste laget</title>
+</head>
+<body>
+    <div class="containerTherm">    
+        <h3 id="what" style="font-size: 200%; text-align: center;">What's the temperature in class?</h3>
+        <div id="therBod">
+            <div id="empty">
+                <div id="mercury" onclick="tp('hora.html')"></div>
+            </div>
+        </div>
+    </div> 
+    <div class="containerCloud">
+        <div class="cloud" id="tempCloud">
+            <p class="cloudText"><b>Temperature:</b><span class="innerText" id="tempText"></span></p>
+        </div>
+        <div class="cloud" id="humCloud">
+            <p class="cloudText"><b>Humidity:</b><span class="innerText" id="humText"></span></p>
+        </div> 
+    </div>
+    <div class="containerInfo">
+        <label><b>Delay:</b></label>
+        <input class="delInput" id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3"></input> 
+        <input class="delInput" id="enter" type="submit" onclick="changeDel()">
+    </div>
+    <script>
+        function enforceMaxLength(element) {
+          if (element.value.length > 2) {
+            element.value = element.value.slice(0, 2);
+          }
+        }
+      </script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="index.js"></script>
+    </body>
+</html>
