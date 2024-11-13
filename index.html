@@ -17,17 +17,19 @@
     </div> 
     <div class="containerCloud">
         <div class="cloud" id="tempCloud">
-            <p class="cloudText"><b>Temperature:</b><span class="innerText" id="tempText"></span></p>
+            <p class="cloudText"><b>Temperature:</b><br><br><span class="innerText" id="tempText"></span></p>
         </div>
         <div class="cloud" id="humCloud">
-            <p class="cloudText"><b>Humidity:</b><span class="innerText" id="humText"></span></p>
+            <p class="cloudText"><b>Humidity:</b><br><br><span class="innerText" id="humText"></span></p>
         </div> 
     </div>
-    <div class="containerInfo">
-        <label><b>Delay:</b></label>
-        <input class="delInput" id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3"></input> 
-        <input class="delInput" id="enter" type="submit" onclick="changeDel()">
-    </div>
+        <div class="containerInfo">
+            <div class="dawg">
+                <label><b>Delay:</b></label>
+                <input id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3"></input> 
+                <input id="enter" type="submit" onclick="changeDel()">
+            </div>
+        </div>
     <script>
         function enforceMaxLength(element) {
           if (element.value.length > 2) {

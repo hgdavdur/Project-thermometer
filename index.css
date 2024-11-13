@@ -26,11 +26,24 @@ html,body{
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    text-align: center;
 }
 
 .containerInfo{
+    display: flex;
     width: 25%;
     height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dawg{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    text-align: center;
+    font-size: 2rem;
 }
 
 #therBod{
@@ -65,6 +78,15 @@ html,body{
     background-color: white;
     height: 30%;
     width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 30%;
+}
+
+.cloudText{
+    font-size: 2rem;
 }
 
 p{

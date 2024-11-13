@@ -45,7 +45,15 @@ delRef2.on("value", (snapshot) => {
 
 // change delay in firebase through website
 function changeDel(){
-    delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
+    if(document.getElementById("delText").value >= 3 && document.getElementById("delText").value <= 10){
+        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
+    } else if (document.getElementById("delText").value <3){ 
+        document.getElementById("delText").value = 3
+        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
+    } else {
+        document.getElementById("delText").value = 10
+        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
+    }
 };
 
 // change between pages
@@ -72,7 +80,9 @@ function mercHeight() {
     // set color red if temperature is above zero degrees, blue if not
     if(temperature >= 0) {
         mercury.style.backgroundColor = "red";
-    } else {
+    } else if(-30 < temperature < 0){
         mercury.style.backgroundColor = "blue";
-    } 
+    } else if(temperature <-30){
+        mercury.style.height = 0;
+    }
 };
