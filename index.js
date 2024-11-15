@@ -23,6 +23,8 @@ let delRef2 = db.ref("/therm/delay");
 
 let temperature;
 
+const currentPage = window.location.pathname;
+
 // change temperature through firebase
 tempRef.on("value", (snapshot) => {
     temperature = snapshot.val();
@@ -36,6 +38,7 @@ humRef.on("value", (snapshot) => {
     const humidity = snapshot.val();
     document.getElementById("humText").innerHTML = humidity + "%";
 });
+
 
 // change delay on the website through firebase
 delRef2.on("value", (snapshot) => {
@@ -56,6 +59,12 @@ function changeDel(){
     }
 };
 
+function getTemp(){
+    let fahrenheit = temperature*9/5+32;
+    let kelvin = temperature+273.15;
+    alert("Fahrenheit: " + fahrenheit.toFixed(1) + "°F" + "\n" + "Kelvin: " + kelvin.toFixed(2) + "K");
+}
+
 // change between pages
 function tp(link){
     window.location.href = link
@@ -73,14 +82,14 @@ function mercHeight() {
 
     if (typeof temperature == 'undefined') {
         return;
-    }
+    };
     // start in the middle
     mercury.style.height = (tempToPixelCoefficient*temperature+heightToZeroDegrees + "%");
 
     // set color red if temperature is above zero degrees, blue if not
     if(temperature >= 0) {
         mercury.style.backgroundColor = "red";
-    } else if(-30 < temperature < 0){
+    } else if(temperature < 0 && -30 <= temperature){
         mercury.style.backgroundColor = "blue";
     } else if(temperature <-30){
         mercury.style.height = 0;

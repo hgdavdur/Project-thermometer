@@ -29,12 +29,12 @@ html,body{
     text-align: center;
 }
 
-.containerInfo{
+.containerExtra{
     display: flex;
     width: 25%;
     height: 100%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -95,4 +95,24 @@ p{
 
 h3{
     pointer-events: none;
+}
+
+#enter{
+    cursor: pointer;
+}
+
+#button{
+    background-color: red;
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    border: 3px solid black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#button:hover{
+    transform: scale(1.1);
 }
