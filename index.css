@@ -14,7 +14,7 @@ html,body{
 .topRow, .bottomRow {
     display: flex;
     width: 100%;
-    height: 50%; /* Varje rad tar upp hälften av höjden */
+    height: 50%;
 }
 
 .containerTherm{
@@ -23,6 +23,7 @@ html,body{
     height: 100%;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
 }
 
 .containerCloud{
@@ -147,6 +148,8 @@ button:hover{
     display: flex;
     height: 100%;
     width: 25%;
+    align-items: end;
+    justify-content: center;
 }
 
 .cur{
@@ -180,4 +183,8 @@ button:hover{
     font-size: 2rem;
     border: 1px solid black;
     border-collapse: collapse;
+}
+
+.row1{
+    background-color: gray;
 }

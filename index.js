@@ -13,13 +13,13 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
-let tempRef = db.ref("/therm/temp");
+let tempRef = db.ref("/therm/current/temp");
 
-let humRef = db.ref("/therm/hum");
+let humRef = db.ref("/therm/current/hum");
 
-let delRef = db.ref("/therm");
+let delRef = db.ref("/therm/current");
 
-let delRef2 = db.ref("/therm/delay");
+let delRef2 = db.ref("/therm/current/delay");
 
 let temperature;
 
@@ -98,3 +98,49 @@ function mercHeight() {
         mercury.style.height = 0;
     }
 };
+
+function handleDateChange(dateInputId) {
+    const dateInput = document.getElementById(dateInputId);
+
+    dateInput.addEventListener('change', function (e) {
+        const selectedDate = this.value; 
+
+        e.preventDefault();
+
+        if (selectedDate) {
+            const dateRef = db.ref('/therm/dates/' + selectedDate); 
+            dateRef.once('value', function(snapshot) {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const temperature = data.temp;
+                    const humidity = data.hum;
+                    
+                    if (dateInputId === 'dateInput') {
+                        document.getElementById('selectedTemp').textContent = temperature + "°C";
+                        document.getElementById('selectedHum').textContent = humidity + "%";
+                    } else if (dateInputId === 'dateInput2') {
+                        document.getElementById('selectedTemp2').textContent = temperature + "°C";
+                        document.getElementById('selectedHum2').textContent = humidity + "%";
+                    }
+                } else {
+                    alert('No data found for the selected date.');
+                }
+            });
+        } else {
+            alert('Please select a valid date.');
+        }
+    });
+}
+
+handleDateChange('dateInput');
+handleDateChange('dateInput2');
+
+document.getElementById('delText').addEventListener('input', function(event) {
+    let filteredValue = '';
+    for (let i = 0; i < this.value.length; i++) {
+        if (this.value[i] >= '0' && this.value[i] <= '9') {
+            filteredValue += this.value[i];
+        }
+    }
+    this.value = filteredValue;
+});
