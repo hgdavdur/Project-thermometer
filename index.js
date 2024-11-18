@@ -29,6 +29,7 @@ const currentPage = window.location.pathname;
 tempRef.on("value", (snapshot) => {
     temperature = snapshot.val();
     document.getElementById("tempText").innerHTML = temperature + "°C";
+    document.getElementById("curTemp").innerHTML = temperature + "°C";
     
     mercHeight();
 });
@@ -37,6 +38,7 @@ tempRef.on("value", (snapshot) => {
 humRef.on("value", (snapshot) => {
     const humidity = snapshot.val();
     document.getElementById("humText").innerHTML = humidity + "%";
+    document.getElementById("curHum").innerHTML = humidity + "%";
 });
 
 
@@ -44,6 +46,7 @@ humRef.on("value", (snapshot) => {
 delRef2.on("value", (snapshot) => {
     const delay = snapshot.val();
     document.getElementById("delText").value = delay / 1000;
+    document.getElementById("curDel").innerHTML = delay / 1000 + "s";
 });
 
 // change delay in firebase through website

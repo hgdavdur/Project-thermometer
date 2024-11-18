@@ -7,28 +7,62 @@
     <title>I hetaste laget</title>
 </head>
 <body>
-    <div class="containerTherm">    
-        <h3 id="what" style="font-size: 200%; text-align: center;">What's the temperature in class?</h3>
-        <div id="therBod">
-            <div id="empty">
-                <div id="mercury" onclick="getTemp()"></div>
+    <div class="topRow">
+        <div class="containerTherm">    
+            <h3 id="what" style="font-size: 200%; text-align: center;">What's the temperature in class?</h3>
+            <div id="therBod">
+                <div id="empty">
+                    <div id="mercury" onclick="getTemp()"></div>
+                </div>
+            </div>
+        </div> 
+        <div class="containerCloud">
+            <div class="cloud" id="tempCloud">
+                <p class="cloudText"><b>Temperature:</b><br><br><span class="innerText" id="tempText"></span></p>
+            </div>
+            <div class="cloud" id="humCloud">
+                <p class="cloudText"><b>Humidity:</b><br><br><span class="innerText" id="humText"></span></p>
+            </div> 
+        </div>
+            <div class="containerExtra">
+                <div class="dawg">
+                    <label><b>Delay:</b></label>
+                    <input id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3"></input> 
+                    <input id="enter" type="submit" onclick="changeDel()">
+                </div>
             </div>
         </div>
-    </div> 
-    <div class="containerCloud">
-        <div class="cloud" id="tempCloud">
-            <p class="cloudText"><b>Temperature:</b><br><br><span class="innerText" id="tempText"></span></p>
-        </div>
-        <div class="cloud" id="humCloud">
-            <p class="cloudText"><b>Humidity:</b><br><br><span class="innerText" id="humText"></span></p>
-        </div> 
-    </div>
-        <div class="containerExtra">
-            <div id="button" onclick="tp('table.html')"><b>Table</b></div>
-            <div class="dawg">
-                <label><b>Delay:</b></label>
-                <input id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3"></input> 
-                <input id="enter" type="submit" onclick="changeDel()">
+        <div class="bottomRow">
+            <div class="left25">
+                <span>Temperature:</span>
+                <div class="cur" id="curTempTit">
+                    <p id="curTemp"></p>
+                </div>
+                <span>Humidity:</span>
+                <div class="cur" id="curHumTit">
+                    <p id="curHum"></p>
+                </div>
+                <span>Delay:</span>
+                <div class="cur" id="curDelTit">
+                    <p id="curDel"></p>
+                </div>
+            </div>
+            <div class="middle50">
+                <table>
+                    <tr>
+                        <th style="width: 33%;">Date</th>
+                        <th style="width: 33%;">Temperature</th>
+                        <th style="width: 33%;">Humidity</th>
+                    </tr>
+                    <tr>
+                        <th><input type="date"></th>
+                        <td>20</td>
+                        <td>23</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="right25">
+        
             </div>
         </div>
     <script>
