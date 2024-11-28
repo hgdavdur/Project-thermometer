@@ -11,6 +11,11 @@ html,body{
     flex-direction: column;
 }
 
+#what{
+    color: black;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+}
+
 .topRow, .bottomRow {
     display: flex;
     width: 100%;
@@ -45,6 +50,11 @@ html,body{
     align-items: center;
 }
 
+.containerExtra label{
+    color: black;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+}
+
 .dawg{
     display: flex;
     flex-direction: column;
@@ -57,10 +67,10 @@ html,body{
     width: 50%;
     height: 80%;
     background-color: white;
-    border: 3px solid black;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
     border-radius: 150px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -72,13 +82,13 @@ html,body{
     border: 3px solid aqua;
     display: flex;
     flex-direction: column-reverse;
+    margin-right: 4%;
 }
 
 #mercury{
     background-color: red;
     width: 100%;
     height: 100%;
-    cursor: pointer;
 }
 
 .cloud{
@@ -88,12 +98,13 @@ html,body{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 3px solid black;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
     border-radius: 30%;
 }
 
 .cloudText{
-    font-size: 2rem;
+    font-size: 300%;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
 }
 
 p{
@@ -109,24 +120,7 @@ h3{
     cursor: pointer;
 }
 
-button{
-    background-color: red;
-    height: 6rem;
-    width: 6rem;
-    border-radius: 50%;
-    border: 3px solid black;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-button:hover{
-    transform: scale(1.05);
-    filter: brightness(0.95);
-}
-
-.left25{
+#left25{
     display: flex;
     height: 100%;
     width: 25%;
@@ -135,7 +129,7 @@ button:hover{
     align-items: center;
 }
 
-.middle50{
+#middle50{
     display: flex;
     height: 100%;
     width: 50%;
@@ -144,8 +138,9 @@ button:hover{
     flex-direction: column;
 }
 
-.right25{
+#right25{
     display: flex;
+    position: relative;
     height: 100%;
     width: 25%;
     align-items: end;
@@ -157,7 +152,7 @@ button:hover{
     width: 70%;
     height: 20%;
     background-color: white;
-    border: 3px solid black;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -166,25 +161,88 @@ button:hover{
 
 .cur p{
     color: black;
-    font-size: 2rem;
+    font-size: 300%;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
 }
 
-.left25 span{
-    font-size: 2rem;
+#left25 span{
+    font-size: 250%;
     font-weight: bold;
     margin-bottom: -10%;
 }
 
-.middle50 table{
+#middle50 table{
     width: 100%;
 }
 
-.middle50 table, th, td{
+#middle50 table, th, td{
     font-size: 2rem;
+    height: 20%;
     border: 1px solid black;
     border-collapse: collapse;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+    text-align: center;
 }
 
 .row1{
     background-color: gray;
+}
+
+#middle50 table input{
+    border: 3px solid black;
+}
+
+#howMuchMerc{
+    display: flex;
+    width: 20%;
+    height: 80%;
+    flex-direction: column;
+    margin-right: 15%;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: large;
+    text-shadow: black 1px 0 1px;
+}
+
+#left25 span{
+    color: black;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+}
+
+#right25 .hitbox{
+    position: absolute;
+    background-color: black;
+    opacity: 0.0;
+    cursor: pointer;
+}
+
+#headHit{
+    width: 36%;
+    height: 18%;
+    bottom: 37%;
+    right: 13%;
+}
+
+#tailHit{
+    width: 39%;
+    height: 7.5%;
+    bottom: 2%;
+    right: 47.5%;
+}
+
+#tummyHit{
+    width: 33%;
+    height: 25%;
+    bottom: 10%;
+    right: 15%;
+}   
+
+#myCharts{
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 20px;
+    box-shadow: 2px 2px 3px rgba(0,0,0,1);
 }

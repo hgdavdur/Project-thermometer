@@ -5,54 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="index.css">
     <title>I hetaste laget</title>
+    <link rel="icon" href="https://t3.ftcdn.net/jpg/02/49/51/64/360_F_249516441_xHEXxfuXvBZeYc0qkBBKNnnMIAc1Aj4x.jpg" type="image/x-icon"/>
 </head>
 <body>
     <div class="topRow">
         <div class="containerTherm">    
-            <h3 id="what" style="font-size: 200%; text-align: center;">What's the temperature in class?</h3>
+            <h3 id="what" style="font-size: 200%; text-align: center; color: white;">What's the temperature in class?</h3>
             <div id="therBod">
                 <div id="empty">
-                    <div id="mercury" onclick="getTemp()"></div>
+                    <div id="mercury"></div>   
+                </div>
+                <div id="howMuchMerc"> 
+                    <p id="maxTherm">30</p>
+                    <p id="zeroTherm">0</p>
+                    <p id="minTherm">-30</p>
                 </div>
             </div>
         </div> 
         <div class="containerCloud">
             <div class="cloud" id="tempCloud">
-                <p class="cloudText"><b>Temperature:</b><br><br><span class="innerText" id="tempText"></span></p>
+                <p class="cloudText"><b style="color: cyan;">Temperature:</b><br><br><span class="innerText" id="tempText" style="color: cyan;"></span></p>
             </div>
             <div class="cloud" id="humCloud">
-                <p class="cloudText"><b>Humidity:</b><br><br><span class="innerText" id="humText"></span></p>
+                <p class="cloudText"><b style="color: orange;">Humidity:</b><br><br><span class="innerText" id="humText" style="color: orange;"></span></p>
             </div> 
         </div>
             <div class="containerExtra">
                 <div class="dawg">
-                    <label><b>Delay:</b></label>
-                    <input id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3"></input> 
-                    <input id="enter" type="submit" onclick="changeDel()">
+                    <label><b style="color: white;">Delay:</b></label>
+                    <input id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3" onKeyDown="return false" style="border: 3px solid black; border-bottom: none;"> 
+                    <input id="enter" type="submit" onclick="changeDel()" style="border: 3px solid black;">
                 </div>
             </div>
         </div>
         <div class="bottomRow">
-            <div class="left25">
-                <span>Temperature:</span>
+            <div id="left25">
+                <span style="color: cyan;">Temperature:</span>
                 <div class="cur" id="curTempTit">
-                    <p id="curTemp"></p>
+                    <p id="curTemp" style="color: cyan;"></p>
                 </div>
-                <span>Humidity:</span>
+                <span style="color: orange;">Humidity:</span>
                 <div class="cur" id="curHumTit">
-                    <p id="curHum"></p>
+                    <p id="curHum" style="color: orange;"></p>
                 </div>
-                <span>Delay:</span>
+                <span style="color: white;">Delay:</span>
                 <div class="cur" id="curDelTit">
                     <p id="curDel"></p>
                 </div>
             </div>
-            <div class="middle50">
+            <div id="middle50">
                 <table>
                     <tr class="row1">
-                        <th style="width: 33%;">Date</th>
-                        <th style="width: 33%;">Temperature</th>
-                        <th style="width: 33%;">Humidity</th>
+                        <th style="width: 33%; color: white;">Date</th>
+                        <th style="width: 33%; color: white;">Lowest</th>
+                        <th style="width: 33%; color: white;">Highest</th>
                     </tr>
                     <tr class="row2">
                         <th><input type="date" id="dateInput" onKeyDown="return false"></th>
@@ -65,9 +71,19 @@
                         <td id="selectedHum2">--</td>
                     </tr>
                 </table>
+                <div id="myCharts" style="background-color: rgba(255, 255, 255, 0.683);">
+                    <canvas id="tempGraph" height="30" width="100"></canvas>
+                    <canvas id="temp2Graph" height="30" width="100"></canvas>
+                </div>
             </div>
-            <div class="right25">
-                <img src="image.png" style="width: 100%; height: 57%;">
+            <div id="right25">
+                <div id="headHit" class="hitbox" onclick="catReact('head')"></div>
+                <div id="tailHit" class="hitbox" onclick="catReact('tail')"></div>
+                <audio id="meowSound" src="cat-meow-6226.mp3"></audio>
+                <audio id="hissSound" src="angry_cats-65018-[AudioTrimmer.com].mp3"></audio>
+                <div>
+                    <img src="image.png" style="width: 100%; height: 57%;">
+                </div>
             </div>
         </div>
     <script>
@@ -76,9 +92,11 @@
             element.value = element.value.slice(0, 2);
           }
         }
-      </script>
+    </script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="index.js"></script>
-    </body>
+    <script src="data.js"></script>
+</body>
 </html>

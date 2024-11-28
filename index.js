@@ -1,3 +1,5 @@
+//@ts-nocheck
+// Firebase configuration and initialization
 const firebaseConfig = {
     apiKey: "AIzaSyCBw68I3ro5SC5VPNAWoJcq-vlF2PCW8p8",
     authDomain: "thermometer-davit-72936.firebaseapp.com",
@@ -13,129 +15,62 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
-let tempRef = db.ref("/therm/current/temp");
-
-let humRef = db.ref("/therm/current/hum");
-
+// Real-time data references
+const currentDataRef = db.ref("/therm/current");
+const datesRef = db.ref("/therm/dates");
+const actDatesRef = db.ref("/therm/actDates");
 let delRef = db.ref("/therm/current");
-
 let delRef2 = db.ref("/therm/current/delay");
 
-let temperature;
+// Real-time listeners for temperature and humidity
+currentDataRef.on("value", (snapshot) => {
+    const data = snapshot.val();
+    if (!data) return;
 
-const currentPage = window.location.pathname;
-
-// change temperature through firebase
-tempRef.on("value", (snapshot) => {
-    temperature = snapshot.val();
-    document.getElementById("tempText").innerHTML = temperature + "°C";
-    document.getElementById("curTemp").innerHTML = temperature + "°C";
-    
-    mercHeight();
+    const { temp, hum } = data;
+    if (temp !== undefined) {
+        updateTemperatureDisplay(temp);
+        updateChart(temp, "temperature");
+    }
+    if (hum !== undefined) {
+        updateHumidityDisplay(hum);
+        updateChart(hum, "humidity");
+    }
 });
 
-// change humidity through firebase
-humRef.on("value", (snapshot) => {
-    const humidity = snapshot.val();
-    document.getElementById("humText").innerHTML = humidity + "%";
-    document.getElementById("curHum").innerHTML = humidity + "%";
-});
+// Update temperature display
+function updateTemperatureDisplay(temp) {
+    document.getElementById("tempText").innerHTML = `${temp}°C`;
+    document.getElementById("curTemp").innerHTML = `${temp}°C`;
+    updateMercuryHeight(temp);
+}
 
+// Update humidity display
+function updateHumidityDisplay(hum) {
+    document.getElementById("humText").innerHTML = `${hum}%`;
+    document.getElementById("curHum").innerHTML = `${hum}%`;
+}
 
-// change delay on the website through firebase
 delRef2.on("value", (snapshot) => {
     const delay = snapshot.val();
     document.getElementById("delText").value = delay / 1000;
     document.getElementById("curDel").innerHTML = delay / 1000 + "s";
 });
 
-// change delay in firebase through website
-function changeDel(){
-    if(document.getElementById("delText").value >= 3 && document.getElementById("delText").value <= 10){
-        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
-    } else if (document.getElementById("delText").value <3){ 
-        document.getElementById("delText").value = 3
-        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
+// Change delay in Firebase through the website
+function changeDel() {
+    if (document.getElementById("delText").value >= 3 && document.getElementById("delText").value <= 10) {
+        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000) });
+    } else if (document.getElementById("delText").value < 3) {
+        document.getElementById("delText").value = 3;
+        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000) });
     } else {
-        document.getElementById("delText").value = 10
-        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000)});
+        document.getElementById("delText").value = 10;
+        delRef.update({ delay: parseFloat(document.getElementById("delText").value * 1000) });
     }
-};
-
-function getTemp(){
-    let fahrenheit = temperature*9/5+32;
-    let kelvin = temperature+273.15;
-    alert("Fahrenheit: " + fahrenheit.toFixed(1) + "°F" + "\n" + "Kelvin: " + kelvin.toFixed(2) + "K");
 }
 
-// change between pages
-function tp(link){
-    window.location.href = link
-};
-
-function mercHeight() {
-    // the range is between 30 degrees and -30 degrees
-    const degreeRange = 30;
-    const tempToPixelCoefficient = 5/(degreeRange/10);
-    const heightToZeroDegrees = 50;
-    console.log(tempToPixelCoefficient);
-
-    // thermometer mercury box
-    const mercury = document.getElementById("mercury");
-
-    if (typeof temperature == 'undefined') {
-        return;
-    };
-    // start in the middle
-    mercury.style.height = (tempToPixelCoefficient*temperature+heightToZeroDegrees + "%");
-
-    // set color red if temperature is above zero degrees, blue if not
-    if(temperature >= 0) {
-        mercury.style.backgroundColor = "red";
-    } else if(temperature < 0 && -30 <= temperature){
-        mercury.style.backgroundColor = "blue";
-    } else if(temperature <-30){
-        mercury.style.height = 0;
-    }
-};
-
-function handleDateChange(dateInputId) {
-    const dateInput = document.getElementById(dateInputId);
-
-    dateInput.addEventListener('change', function (e) {
-        const selectedDate = this.value; 
-
-        e.preventDefault();
-
-        if (selectedDate) {
-            const dateRef = db.ref('/therm/dates/' + selectedDate); 
-            dateRef.once('value', function(snapshot) {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const temperature = data.temp;
-                    const humidity = data.hum;
-                    
-                    if (dateInputId === 'dateInput') {
-                        document.getElementById('selectedTemp').textContent = temperature + "°C";
-                        document.getElementById('selectedHum').textContent = humidity + "%";
-                    } else if (dateInputId === 'dateInput2') {
-                        document.getElementById('selectedTemp2').textContent = temperature + "°C";
-                        document.getElementById('selectedHum2').textContent = humidity + "%";
-                    }
-                } else {
-                    alert('No data found for the selected date.');
-                }
-            });
-        } else {
-            alert('Please select a valid date.');
-        }
-    });
-}
-
-handleDateChange('dateInput');
-handleDateChange('dateInput2');
-
-document.getElementById('delText').addEventListener('input', function(event) {
+document.getElementById('delText').addEventListener('input', function (event) {
     let filteredValue = '';
     for (let i = 0; i < this.value.length; i++) {
         if (this.value[i] >= '0' && this.value[i] <= '9') {
@@ -144,3 +79,224 @@ document.getElementById('delText').addEventListener('input', function(event) {
     }
     this.value = filteredValue;
 });
+
+// Mercury height for temperature
+function updateMercuryHeight(temp) {
+    const degreeRange = 33.5;
+    const tempToPixelCoefficient = 5 / (degreeRange / 10);
+    const heightToZeroDegrees = 50;
+
+    const mercury = document.getElementById("mercury");
+    mercury.style.height = `${tempToPixelCoefficient * temp + heightToZeroDegrees}%`;
+
+    mercury.style.backgroundColor = temp >= 0 ? "red" : "blue";
+}
+
+// Real-time chart updates (use your charting library here)
+function updateChart(value, type) {
+    console.log(`Update ${type} chart with value: ${value}`);
+}
+
+// Initialize the first temperature chart (Chart 1)
+const tempChartCtx = document.getElementById("tempGraph").getContext("2d");
+const tempChart = new Chart(tempChartCtx, {
+    type: "line",
+    data: {
+        labels: [], // Initially empty, will be updated dynamically
+        datasets: [{
+            label: "Temperature",
+            data: [],  // This will hold the temperature data
+            borderColor: "cyan", // Line color for temperature
+            backgroundColor: "rgba(0,255,255,0.2)", // Background color for chart
+            borderWidth: 1,
+            humidityData: [] // An array to hold humidity data for tooltips
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true } // Ensuring the y-axis starts from zero
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItem) {
+                        return tooltipItem[0].label; // Shows the time label (hour)
+                    },
+                    label: function(tooltipItem) {
+                        const tempValue = tooltipItem.raw; // Temperature value
+                        const humidityValue = tooltipItem.dataset.humidityData[tooltipItem.dataIndex]; // Corresponding humidity value
+                        return `Temp: ${tempValue.toFixed(1)}°C ||| Humidity: ${humidityValue.toFixed(1)}%`; // Display both temperature and humidity
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Initialize the second temperature chart (Chart 2)
+const tempChartCtx2 = document.getElementById("temp2Graph").getContext("2d");
+const tempChart2 = new Chart(tempChartCtx2, {
+    type: "line",
+    data: {
+        labels: [], // Initially empty, will be updated dynamically
+        datasets: [{
+            label: "Temperature",
+            data: [],  // This will hold the temperature data
+            borderColor: "cyan", // Line color for temperature
+            backgroundColor: "rgba(0,255,255,0.2)", // Background color for chart
+            borderWidth: 1,
+            humidityData: [] // An array to hold humidity data for tooltips
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true } // Ensuring the y-axis starts from zero
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItem) {
+                        return tooltipItem[0].label; // Shows the time label (hour)
+                    },
+                    label: function(tooltipItem) {
+                        const tempValue = tooltipItem.raw; // Temperature value
+                        const humidityValue = tooltipItem.dataset.humidityData[tooltipItem.dataIndex]; // Corresponding humidity value
+                        return `Temperature: ${tempValue.toFixed(1)}°C ||| Humidity: ${humidityValue.toFixed(1)}%`; // Display both temperature and humidity
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Function to update the graph with temperature and humidity data
+function updateGraphForDate(date, chartInstance) {
+    const [year, month, day] = date.split("-");
+    const averagesRef = db.ref(`/therm/averages/${year}/${month}/${day}`);
+
+    averagesRef.once("value", (snapshot) => {
+        const dayData = snapshot.val();
+
+        // Initialize arrays for the chart and humidity data
+        const hourLabels = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`);
+        const tempDataPoints = Array(24).fill(null); // Default to null for missing hours
+        const humidityDataPoints = Array(24).fill(null); // Default to null for missing hours
+
+        // Populate data points for both temperature and humidity
+        if (dayData) {
+            Object.entries(dayData).forEach(([hour, hourData]) => {
+                const tempValue = hourData.avgTemp;
+                const humidityValue = hourData.avgHum;
+                if (tempValue !== undefined) {
+                    tempDataPoints[parseInt(hour)] = tempValue;
+                }
+                if (humidityValue !== undefined) {
+                    humidityDataPoints[parseInt(hour)] = humidityValue;
+                }
+            });
+        } else {
+            alert(`No data available for ${date}`);
+        }
+
+        // Update chart dataset and labels
+        chartInstance.data.labels = hourLabels;
+        chartInstance.data.datasets[0].data = tempDataPoints; // Update temperature data
+        chartInstance.data.datasets[0].humidityData = humidityDataPoints; // Update humidity data for tooltips
+        chartInstance.update();
+    });
+}
+
+function catReact(x) {
+    const soundMapping = {
+        head: {
+            elementId: 'headHit',
+            soundId: 'meowSound'
+        },
+        tail: {
+            elementId: 'tailHit',
+            soundId: 'hissSound'
+        }
+    };
+
+    // Check if x is a valid key in the soundMapping object
+    if (soundMapping[x]) {
+        const { elementId, soundId } = soundMapping[x];
+        const soundElement = document.getElementById(soundId);
+        const hitElement = document.getElementById(elementId);
+
+        hitElement.addEventListener('click', () => {
+            soundElement.currentTime = 0;
+            soundElement.play();
+        });
+    } else {
+        console.warn('Invalid parameter passed to catReact');
+    }
+}
+
+catReact('head');  // Plays the meow sound when head is clicked
+catReact('tail');  // Plays the hiss sound when tail is clicked
+
+document.getElementById("dateInput").addEventListener("change", function () {
+    const date = this.value; // Format: yyyy-mm-dd
+    if (date) {
+        // First, update the min/max values in the table
+        fetchMinMaxValues(date, "selectedTemp", "selectedHum");
+
+        // Then, update the graph for temperature and humidity
+        updateGraphForDate(date, tempChart, "temperature");
+    }
+});
+
+document.getElementById("dateInput2").addEventListener("change", function () {
+    const date = this.value; // Format: yyyy-mm-dd
+    if (date) {
+        // First, update the min/max values in the table
+        fetchMinMaxValues(date, "selectedTemp2", "selectedHum2");
+
+        // Then, update the graph for temperature and humidity
+        updateGraphForDate(date, tempChart2, "temperature");
+    }
+});
+
+
+function fetchMinMaxValues(date, lowCellId, highCellId) {
+    const [year, month, day] = date.split("-");
+    const averagesRef = db.ref(`/therm/averages/${year}/${month}/${day}`);
+
+    averagesRef.once("value", (snapshot) => {
+        const dayData = snapshot.val();
+        if (!dayData) {
+            // If no data is available for the selected date, clear the cells
+            document.getElementById(lowCellId).innerText = "--";
+            document.getElementById(highCellId).innerText = "--";
+            return;
+        }
+
+        let minTemp = Infinity, maxTemp = -Infinity;
+        let minHum = Infinity, maxHum = -Infinity;
+
+        Object.values(dayData).forEach((hourData) => {
+            const { avgTemp, avgHum } = hourData;
+            if (avgTemp !== undefined) {
+                minTemp = Math.min(minTemp, avgTemp);
+                maxTemp = Math.max(maxTemp, avgTemp);
+            }
+            if (avgHum !== undefined) {
+                minHum = Math.min(minHum, avgHum);
+                maxHum = Math.max(maxHum, avgHum);
+            }
+        });
+
+        // Update the table cells with the results
+        document.getElementById(lowCellId).innerHTML = `
+            <span style="color: cyan;">${minTemp.toFixed(1)}°C</span><br> 
+            <span style="color: orange;">${minHum.toFixed(1)}%</span>
+        `;
+        document.getElementById(highCellId).innerHTML = `
+            <span style="color: cyan;">${maxTemp.toFixed(1)}°C</span><br>
+            <span style="color: orange;">${maxHum.toFixed(1)}%</span>
+        `;
+    });
+}
