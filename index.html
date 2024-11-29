@@ -36,6 +36,10 @@
                     <input id="delText" type="number" oninput="enforceMaxLength(this)" placeholder="Seconds:" min="3" max="10" value="3" onKeyDown="return false" style="border: 3px solid black; border-bottom: none;"> 
                     <input id="enter" type="submit" onclick="changeDel()" style="border: 3px solid black;">
                 </div>
+                <div id="extraArrow" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <p style="font-weight: bold; text-shadow: 2px 2px 3px rgba(0, 0, 0, 1); font-size: 250%;">Click To See More!</p>
+                    <a onclick="document.getElementsByClassName('bottomRow')[0].scrollIntoView({behavior: 'smooth'});" style="display: flex; justify-content: center;"><img src="https://cdn-icons-png.flaticon.com/512/61/61932.png" style="width: 50%; cursor: pointer;"></a>
+                </div>
             </div>
         </div>
         <div class="bottomRow">
@@ -77,12 +81,16 @@
                 </div>
             </div>
             <div id="right25">
+                <div id="backArrow" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <p style="font-weight: bold; text-shadow: 2px 2px 3px rgba(0, 0, 0, 1); font-size: 250%;">Click To Go Back!</p>
+                    <a class="arrow" onclick="document.getElementsByClassName('topRow')[0].scrollIntoView({behavior: 'smooth'});" style="display: flex; justify-content: center;"><img src="https://cdn-icons-png.flaticon.com/512/61/61932.png" style="width: 50%; cursor: pointer; transform: rotate(180deg);"></a>
+                </div>
                 <div id="headHit" class="hitbox" onclick="catReact('head')"></div>
                 <div id="tailHit" class="hitbox" onclick="catReact('tail')"></div>
                 <audio id="meowSound" src="cat-meow-6226.mp3"></audio>
                 <audio id="hissSound" src="angry_cats-65018-[AudioTrimmer.com].mp3"></audio>
-                <div>
-                    <img src="image.png" style="width: 100%; height: 57%;">
+                <div id="catContainer">
+                    <img src="image.png" style="width: 100%; height: 90%;">
                 </div>
             </div>
         </div>

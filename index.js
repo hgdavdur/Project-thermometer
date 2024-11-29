@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 // Firebase configuration and initialization
 const firebaseConfig = {
     apiKey: "AIzaSyCBw68I3ro5SC5VPNAWoJcq-vlF2PCW8p8",
@@ -104,10 +104,10 @@ const tempChart = new Chart(tempChartCtx, {
     data: {
         labels: [], // Initially empty, will be updated dynamically
         datasets: [{
-            label: "Temperature",
+            label: "First Date",
             data: [],  // This will hold the temperature data
-            borderColor: "cyan", // Line color for temperature
-            backgroundColor: "rgba(0,255,255,0.2)", // Background color for chart
+            borderColor: "black", // Line color for temperature
+            backgroundColor: "rgba(0,255,255,1)", // Background color for chart
             borderWidth: 1,
             humidityData: [] // An array to hold humidity data for tooltips
         }]
@@ -141,10 +141,10 @@ const tempChart2 = new Chart(tempChartCtx2, {
     data: {
         labels: [], // Initially empty, will be updated dynamically
         datasets: [{
-            label: "Temperature",
+            label: "Second Date",
             data: [],  // This will hold the temperature data
-            borderColor: "cyan", // Line color for temperature
-            backgroundColor: "rgba(0,255,255,0.2)", // Background color for chart
+            borderColor: "black", // Line color for temperature
+            backgroundColor: "rgba(0,255,255,1)", // Background color for chart
             borderWidth: 1,
             humidityData: [] // An array to hold humidity data for tooltips
         }]
