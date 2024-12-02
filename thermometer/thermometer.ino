@@ -136,8 +136,10 @@ void calculateAndSaveAverages(int hour) {
     if (day.length() == 1) day = "0" + day;
 
     // Firebase path for averages
-    String avgTempPath = "/therm/averages/" + year + "/" + month + "/" + day + "/" + String(hour) + "/avgTemp";
-    String avgHumPath = "/therm/averages/" + year + "/" + month + "/" + day + "/" + String(hour) + "/avgHum";
+    String paddedHour = (hour < 10 ? "0" + String(hour) : String(hour));
+    String avgTempPath = "/therm/averages/" + year + "/" + month + "/" + day + "/" + paddedHour + "/avgTemp";
+    String avgHumPath = "/therm/averages/" + year + "/" + month + "/" + day + "/" + paddedHour + "/avgHum";
+
 
     // Save averages to Firebase
     if (!Firebase.setFloat(firebaseData, avgTempPath, avgTemp)) {

@@ -208,36 +208,6 @@ function updateGraphForDate(date, chartInstance) {
     });
 }
 
-function catReact(x) {
-    const soundMapping = {
-        head: {
-            elementId: 'headHit',
-            soundId: 'meowSound'
-        },
-        tail: {
-            elementId: 'tailHit',
-            soundId: 'hissSound'
-        }
-    };
-
-    // Check if x is a valid key in the soundMapping object
-    if (soundMapping[x]) {
-        const { elementId, soundId } = soundMapping[x];
-        const soundElement = document.getElementById(soundId);
-        const hitElement = document.getElementById(elementId);
-
-        hitElement.addEventListener('click', () => {
-            soundElement.currentTime = 0;
-            soundElement.play();
-        });
-    } else {
-        console.warn('Invalid parameter passed to catReact');
-    }
-}
-
-catReact('head');  // Plays the meow sound when head is clicked
-catReact('tail');  // Plays the hiss sound when tail is clicked
-
 document.getElementById("dateInput").addEventListener("change", function () {
     const date = this.value; // Format: yyyy-mm-dd
     if (date) {
@@ -300,3 +270,24 @@ function fetchMinMaxValues(date, lowCellId, highCellId) {
         `;
     });
 }
+
+function catReact() {
+    // Get the audio elements
+    const sound1 = document.getElementById('catSound1');
+    const sound2 = document.getElementById('catSound2');
+
+    // Randomly select a sound
+    const sounds = [sound1, sound2];
+    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+
+    // Pause all sounds to avoid overlap and play the selected sound
+    sounds.forEach(sound => sound.pause());
+    sounds.forEach(sound => sound.currentTime = 0); // Reset to start
+    randomSound.play();
+}
+
+function enforceMaxLength(element) {
+    if (element.value.length > 2) {
+      element.value = element.value.slice(0, 2);
+    }
+  }
