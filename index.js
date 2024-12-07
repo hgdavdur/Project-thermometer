@@ -127,7 +127,7 @@ const tempChart = new Chart(tempChartCtx, {
                     label: function(tooltipItem) {
                         const tempValue = tooltipItem.raw; // Temperature value
                         const humidityValue = tooltipItem.dataset.humidityData[tooltipItem.dataIndex]; // Humidity value
-                        return `Temp: ${tempValue.toFixed(1)}°C ||| Humidity: ${humidityValue.toFixed(1)}%`; // Tooltip text
+                        return `Temperature: ${tempValue.toFixed(1)}°C ||| Humidity: ${humidityValue.toFixed(1)}%`; // Tooltip text
                     }
                 }
             }
