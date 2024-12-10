@@ -9,9 +9,8 @@ This repository contains a project developed for monitoring classroom environmen
 4. [Hardware Components](#hardware-components)
 5. [Installation and Setup](#installation-and-setup)
 6. [Usage](#usage)
-7. [Screenshots](#screenshots)
-8. [Future Improvements](#future-improvements)
-9. [License](#license)
+7. [Future Improvements](#future-improvements)
+8. [License](#license)
 
 ## 📖 Project Overview
 
@@ -77,19 +76,10 @@ This project was developed as part of a school assignment to create a system for
 2. The data is sent to the Firebase Realtime Database in real-time.
 3. Open the website (`index.html`) to view live temperature and humidity data.
 
-## 📸 Screenshots
-
-### **Website Dashboard**
-*(Insert screenshots of your website UI displaying real-time temperature and humidity charts or values.)*
-
-### **Database Schema**
-*(Insert a screenshot of your Firebase Realtime Database showing how the data is structured.)*
-
 ## 💡 Future Improvements
 
 - Add more sensors to measure other environmental parameters (e.g., CO2 levels, light intensity).
 - Implement user authentication for the website.
-- Display historical data with charts (e.g., using Chart.js or D3.js).
 - Improve the frontend design for a better user experience.
 - Add notifications for extreme temperature or humidity values.
 
